@@ -24,7 +24,8 @@ public class StudentRestController {
 	@GetMapping("student/{id}")
 	public Student getStudent(@PathVariable("id") Integer id){
 		return studentRepository.getOne(id);
-	}
+	} 
+	
 	
 	@GetMapping("studentIme/{ime}")
 	public Collection<Student> getStudentIme(@PathVariable("ime") String ime){
