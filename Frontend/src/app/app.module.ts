@@ -31,6 +31,9 @@ import { GrupaComponent } from './components/grupa/grupa.component';
 import { ProjekatComponent } from './components/projekat/projekat.component';
 import { SmerComponent } from './components/smer/smer.component';
 import { StudentComponent } from './components/student/student.component';
+import { ProjekatDialogComponent } from './components/dialogs/projekat-dialog/projekat-dialog.component';
+import { FormsModule } from '@angular/forms';
+import { SmerDialogComponent } from './components/dialogs/smer-dialog/smer-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,9 @@ import { StudentComponent } from './components/student/student.component';
     GrupaComponent,
     ProjekatComponent,
     SmerComponent,
-    StudentComponent
+    StudentComponent,
+    ProjekatDialogComponent,
+    SmerDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,7 @@ import { StudentComponent } from './components/student/student.component';
     MatSelectModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Projekat } from 'src/app/models/projekat';
 import { ProjekatService } from 'src/app/services/projekat.service';
+import { ProjekatDialogComponent } from '../dialogs/projekat-dialog/projekat-dialog.component';
 
 @Component({
   selector: 'app-projekat',
@@ -15,7 +17,8 @@ export class ProjekatComponent implements OnInit,OnDestroy {
   dataSource: MatTableDataSource<Projekat>;
   subscription: Subscription;
 
-  constructor(private projekatService: ProjekatService) { }
+  constructor(private projekatService: ProjekatService,
+      private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadData()
@@ -34,6 +37,18 @@ export class ProjekatComponent implements OnInit,OnDestroy {
     (error:Error)=>{
       console.log(error.name+' '+ error.message)
     }
+  }
+
+  public openDialog(flag:number,id?:number,naziv?:string,opis?:string,oznaka?:string):void{
+    const dialogRef = this.dialog.open(ProjekatDialogComponent,{data:{id,naziv,opis,oznaka}});
+
+    dialogRef.componentInstance.flag = flag;
+
+    dialogRef.afterClosed().subscribe(result=>{
+      if (result === 1) {
+        this.loadData();
+      }
+    })
   }
 
 }
