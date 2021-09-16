@@ -65,7 +65,7 @@ import { StudentComponent } from './components/student/student.component';
     MatDatepickerModule,
     MatSelectModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
