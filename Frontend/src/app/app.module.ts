@@ -34,6 +34,7 @@ import { StudentComponent } from './components/student/student.component';
 import { ProjekatDialogComponent } from './components/dialogs/projekat-dialog/projekat-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { SmerDialogComponent } from './components/dialogs/smer-dialog/smer-dialog.component';
+import { GrupaDialogComponent } from './components/dialogs/grupa-dialog/grupa-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SmerDialogComponent } from './components/dialogs/smer-dialog/smer-dialo
     SmerComponent,
     StudentComponent,
     ProjekatDialogComponent,
-    SmerDialogComponent
+    SmerDialogComponent,
+    GrupaDialogComponent
   ],
   imports: [
     BrowserModule,
