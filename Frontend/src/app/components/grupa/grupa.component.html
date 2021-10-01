@@ -4,7 +4,8 @@
 
 <div class="container mat-elevation-z8">
   <mat-form-field>
-    <input matInput placeholder="Filter" />
+    <input matInput placeholder="Filter" (keyup)="applyFilter($event)"/>
+    
   </mat-form-field>
   <mat-table #table [dataSource]="dataSource" class="mat-cell" matSort>
 
@@ -26,31 +27,31 @@
     <ng-container matColumnDef="actions">
 
       <mat-header-cell *matHeaderCellDef>
-        <button (click)="openDialog(1)" mat-icon-button color="primary">
+        <button mat-icon-button color="primary" (click)="openDialog(1)">
           <mat-icon>add</mat-icon>
         </button>
       </mat-header-cell>
 
       <mat-cell *matCellDef="let row; let i = index">
-        <button (click)="openDialog(row.id,row.oznaka,row.smer)" mat-icon-button color="primary">
+        <button mat-icon-button color="primary" (click)="openDialog(2,row.id,row.oznaka,row.smer)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
-        <button (click)="openDialog(row.id,row.oznaka,row.smer)" mat-icon-button color="primary">
+        <button mat-icon-button color="primary" (click)="openDialog(3,row.id,row.oznaka,row.smer)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row style="cursor: pointer" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row style="cursor: pointer" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
   </mat-table>
   <mat-paginator [length]="100" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>
 </div>
-<!-- <div class="container mat-elevation-z8">
-    <app-stavka-porudzbine
-      *ngIf="selektovanaPorudzbina"
-      [selektovanaPorudzbina]="selektovanaPorudzbina"
-    ></app-stavka-porudzbine>
-  </div> -->
+<div class="container mat-elevation-z8">
+    <app-student
+      *ngIf="selektovanaGrupa"
+      [selektovanaGrupa]="selektovanaGrupa"
+    ></app-student>
+</div>

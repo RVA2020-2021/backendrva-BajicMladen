@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +35,7 @@ import { ProjekatDialogComponent } from './components/dialogs/projekat-dialog/pr
 import { FormsModule } from '@angular/forms';
 import { SmerDialogComponent } from './components/dialogs/smer-dialog/smer-dialog.component';
 import { GrupaDialogComponent } from './components/dialogs/grupa-dialog/grupa-dialog.component';
+import { StudentDialogComponent } from './components/dialogs/student-dialog/student-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { GrupaDialogComponent } from './components/dialogs/grupa-dialog/grupa-di
     StudentComponent,
     ProjekatDialogComponent,
     SmerDialogComponent,
-    GrupaDialogComponent
+    GrupaDialogComponent,
+    StudentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -72,9 +74,10 @@ import { GrupaDialogComponent } from './components/dialogs/grupa-dialog/grupa-di
     MatDatepickerModule,
     MatSelectModule,
     HttpClientModule,
-    AppRoutingModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent]
 })

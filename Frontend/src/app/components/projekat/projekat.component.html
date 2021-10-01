@@ -7,6 +7,7 @@
       <input
         matInput
         placeholder="Filter"
+        (keyup)="applyFilter($event)"
         
       />
     </mat-form-field>
@@ -36,6 +37,7 @@
   
       <!-- actions -->
       <ng-container matColumnDef="actions">
+        
         <mat-header-cell *matHeaderCellDef>
           <button mat-icon-button color="primary" (click)="openDialog(1)">
             <mat-icon>add</mat-icon>

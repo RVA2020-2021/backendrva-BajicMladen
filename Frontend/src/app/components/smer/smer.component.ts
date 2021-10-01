@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Smer } from 'src/app/models/smer';
@@ -18,6 +20,10 @@ export class SmerComponent implements OnInit {
   dataSource: MatTableDataSource<Smer>;
   subscription: Subscription;
 
+
+  @ViewChild(MatSort,{static: false}) sort:MatSort;
+  @ViewChild(MatPaginator,{static:false}) paginator:MatPaginator
+  
   constructor(private smerService: SmerService,
       private dialog: MatDialog) { }
 
@@ -33,6 +39,8 @@ export class SmerComponent implements OnInit {
     this.subscription = this.smerService.getAllSmer().subscribe(
       data =>{
         this.dataSource = new MatTableDataSource(data)
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       }
     ),
     (error:Error)=>{
@@ -50,6 +58,13 @@ export class SmerComponent implements OnInit {
         this.loadData();
       }
     })
+  }
+
+  applyFilter(event: Event) {
+    var filterValue =  (event.target as HTMLInputElement).value;
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLocaleLowerCase();
+    this.dataSource.filter = filterValue; 
   }
 
 }

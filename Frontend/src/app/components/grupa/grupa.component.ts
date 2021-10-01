@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Grupa } from 'src/app/models/grupa';
@@ -14,9 +16,13 @@ import { GrupaDialogComponent } from '../dialogs/grupa-dialog/grupa-dialog.compo
 })
 export class GrupaComponent implements OnInit, OnDestroy {
 
-  displayedColumns =['id','oznaka','smer'];
+  displayedColumns =['id','oznaka','smer', 'actions'];
   dataSource: MatTableDataSource<Grupa>;
   subscription: Subscription;
+  selektovanaGrupa: Grupa; 
+
+  @ViewChild(MatSort,{static: false}) sort:MatSort;
+  @ViewChild(MatPaginator,{static:false}) paginator:MatPaginator
 
   constructor(private grupaService: GrupaService, 
     private dialog:MatDialog) { }
@@ -32,6 +38,28 @@ export class GrupaComponent implements OnInit, OnDestroy {
   loadData(){
     this.subscription = this.grupaService.getAllGrupe().subscribe(data =>{
       this.dataSource = new MatTableDataSource(data);
+
+           // pretraga po nazivu ugnježdenog objekta
+     this.dataSource.filterPredicate = (data, filter: string) => {
+      const accumulator = (currentTerm: string, key: string) => {
+        return key === 'smer' ? currentTerm + data.smer.naziv : currentTerm + data[key];
+      };
+      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+      const transformedFilter = filter.trim().toLowerCase();
+      return dataStr.indexOf(transformedFilter) !== -1;
+    };
+
+     // sortiranje po nazivu ugnježdenog objekta
+    this.dataSource.sortingDataAccessor = (data, property) => {
+      switch (property) {
+        case 'projekat': return data.smer.naziv.toLocaleLowerCase();
+        default: return data[property];
+      }
+    };
+
+
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     }),
     (error: Error)=>{
       console.log(error.name+' '+ error.message)
@@ -51,6 +79,14 @@ export class GrupaComponent implements OnInit, OnDestroy {
   }
 
   selectRow(row: any){
-
+    this.selektovanaGrupa=row;
   }
+
+  applyFilter(event: Event) {
+    var filterValue =  (event.target as HTMLInputElement).value;
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLocaleLowerCase();
+    this.dataSource.filter = filterValue; 
+  }
+
 }
